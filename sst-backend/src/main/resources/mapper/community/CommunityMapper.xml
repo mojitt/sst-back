@@ -100,7 +100,14 @@
 	                    OR M.MBR_NICKNAME LIKE CONCAT('%', #{keyword}, '%')
 	                    OR P.PLC_NAME LIKE CONCAT('%', #{keyword}, '%')
 	                    OR R.RGN_NAME LIKE CONCAT('%', #{keyword}, '%')
-	                    OR H.HTAG_TAG_NAME LIKE CONCAT('%', #{keyword}, '%')
+	                    OR EXISTS (
+						    SELECT 1
+						    FROM COMMUNITY_HASHTAG CH2
+						    JOIN HASHTAG H2
+						      ON CH2.CHTG_HTAG_NO = H2.HTAG_NO
+						    WHERE CH2.CHTG_COMM_NO = C.COMM_NO
+						      AND H2.HTAG_TAG_NAME LIKE CONCAT('%', #{keyword}, '%')
+						)
 	                    OR TC1.CMM_CD_NAME LIKE CONCAT('%', #{keyword}, '%')
 	                    OR TC2.CMM_CD_NAME LIKE CONCAT('%', #{keyword}, '%')
 	                    OR TC3.CMM_CD_NAME LIKE CONCAT('%', #{keyword}, '%')
@@ -182,7 +189,14 @@
 	                    OR M.MBR_NICKNAME LIKE CONCAT('%', #{keyword}, '%')
 	                    OR P.PLC_NAME LIKE CONCAT('%', #{keyword}, '%')
 	                    OR R.RGN_NAME LIKE CONCAT('%', #{keyword}, '%')
-	                    OR H.HTAG_TAG_NAME LIKE CONCAT('%', #{keyword}, '%')
+	                    OR EXISTS (
+						    SELECT 1
+						    FROM COMMUNITY_HASHTAG CH2
+						    JOIN HASHTAG H2
+						      ON CH2.CHTG_HTAG_NO = H2.HTAG_NO
+						    WHERE CH2.CHTG_COMM_NO = C.COMM_NO
+						      AND H2.HTAG_TAG_NAME LIKE CONCAT('%', #{keyword}, '%')
+						)
 	                )
 	            </otherwise>
 	        </choose>
