@@ -83,8 +83,15 @@
 	            </when>
 
 	            <when test="searchType == 'hashtag'">
-	                AND H.HTAG_TAG_NAME LIKE CONCAT('%', #{keyword}, '%')
-	            </when>
+				    AND EXISTS (
+				        SELECT 1
+				        FROM COMMUNITY_HASHTAG CH2
+				        JOIN HASHTAG H2
+				          ON CH2.CHTG_HTAG_NO = H2.HTAG_NO
+				        WHERE CH2.CHTG_COMM_NO = C.COMM_NO
+				          AND H2.HTAG_TAG_NAME LIKE CONCAT('%', #{keyword}, '%')
+				    )
+				</when>
 	
 	            <otherwise>
 	                AND (
@@ -158,8 +165,15 @@
 	            </when>
 	
 	            <when test="searchType == 'hashtag'">
-	                AND H.HTAG_TAG_NAME LIKE CONCAT('%', #{keyword}, '%')
-	            </when>
+				    AND EXISTS (
+				        SELECT 1
+				        FROM COMMUNITY_HASHTAG CH2
+				        JOIN HASHTAG H2
+				          ON CH2.CHTG_HTAG_NO = H2.HTAG_NO
+				        WHERE CH2.CHTG_COMM_NO = C.COMM_NO
+				          AND H2.HTAG_TAG_NAME LIKE CONCAT('%', #{keyword}, '%')
+				    )
+				</when>
 	
 	            <otherwise>
 	                AND (
